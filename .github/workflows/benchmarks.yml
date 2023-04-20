@@ -30,8 +30,9 @@ jobs:
         cd benchmark && python rotate_results.py "${{ matrix.python-version }}"
     - name: Commit
       run: |
+        git rebase main
         git config user.name "GitHub Benchmarks CI"
         git config user.email "<>"
         git add benchmark/results --all
         git commit -m "Benchmarks: ${{ matrix.python-version }}"
-        git push origin main
+        git push origin
