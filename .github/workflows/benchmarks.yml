@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: main
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -30,9 +32,8 @@ jobs:
         cd benchmark && python rotate_results.py "${{ matrix.python-version }}"
     - name: Commit
       run: |
-        git rebase main
         git config user.name "GitHub Benchmarks CI"
         git config user.email "<>"
         git add benchmark/results --all
         git commit -m "Benchmarks: ${{ matrix.python-version }}"
-        git push origin
+        git push
